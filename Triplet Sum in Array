@@ -1,0 +1,25 @@
+//basically we used two pointer approach inside the first for loop and for that sorting is nessacary..
+bool find3Numbers(int arr[], int n, int X)
+    {
+        //Your Code Here
+           int i,j;
+    sort(arr,arr+n);
+    for(i=0;i<=n-3;i++)
+    {
+       if(arr[i]>X)
+       continue;
+       int target=X-arr[i];
+       j=i+1;
+       int k=n-1;
+       while(j<k)
+       {
+           if(arr[j]+arr[k]>target)
+           k--;
+           else if(arr[j]+arr[k]<target)
+           j++;
+           else
+           return 1;
+       }
+    }
+    return 0;
+    }
