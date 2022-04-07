@@ -1,0 +1,64 @@
+
+//basically we had to solve the question in O(logn) the approach is find the peak ele cause it was given that it existed and around the peak
+element both the arrays are sorted on the left the array is in increasing order and on right it will be in decreasing order ..
+so now apply binary search and you get your answer.....
+
+
+
+int findInMountainArray(int target, MountainArray &mountainArr) 
+    {
+        int high=mountainArr.length()-1,low=0;
+                  while(low<high)
+        {
+            int mid=(low+high)/2;
+            if(mountainArr.get(mid)>mountainArr.get(mid+1))
+            {
+                high=mid;
+            }
+            else if(mountainArr.get(mid)<mountainArr.get(mid+1))
+            low=mid+1;
+        }
+        low=0;
+        int start=high+1,end=mountainArr.length()-1,index=-1;
+            while(low<=high)
+        {
+                int mid=(low+high)/2;
+            if(mountainArr.get(mid)==target)
+            {
+                index=mid;
+                high=mid-1;
+            }
+            else if(mountainArr.get(mid)>target)
+            {
+                high=mid-1;
+            }
+            else
+            {
+                low=mid+1;
+            }
+        }
+        if(index!=-1)
+        {
+            return index;
+        }
+        ///binary search on array which is in decreasing order..
+     while(start<=end)
+        {
+                int mid=(start+ end)/2;
+            if(mountainArr.get(mid)==target)
+            {
+                index=mid;
+                end=mid-1;
+            }
+            else if(mountainArr.get(mid)>target)
+            {
+                start=mid+1;
+            }
+            else
+            {
+                end=mid-1;
+            }
+        }
+        return index;
+    }
+    
