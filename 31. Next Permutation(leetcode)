@@ -1,0 +1,69 @@
+//Ok the brute force approach would be to generate all the possible permutations.Consider the example number is 132 so the possible permutations would be
+123,132,213,231,312,321... and the next greater permutation will be 213. for 321 the answer would be 123 the first number generated and this is the brute force approach
+Time complexity : O(n!). Total possible permutations is n!.
+Space complexity : O(n). Since an array will be used to store the permutations.
+
+//The optimised solution
+First, we observe that for any given sequence that is in descending order, 
+no next larger permutation is possible. For example, no next permutation is possible for the following array:[5,4,3,2,1]
+
+//The algorithm
+1.Linearly traverse the array from the back while traversing find the first index i where arr[i]<arr[i+1]
+2.Again do a linear traverse from back and find a index which is having value greater than the found index in the step one.
+3.swap the values at both the indexes.
+4.The last step of the algorithm is to reverse everything 'after' from the found index at step 1.
+
+//see the algorithm is all about the pattern and intiution
+like consider these examples..
+1.The number is 3124 and the next permutation will be 3142 so here we kept first 2 indexes as is it and swapped indexes 2 and 3. so we have swapped small element at 
+index 2 with greater element at index 3..
+2.The number is 41532 and the next permutation will be 42135 so here a lot of arrangement is done so the pattern we can see is as we go from right to left you see
+2 then 3 and then 5 and all these numbers are in increasing order but after 5 1 comes and here that increasing order breaks now we can replace this 1 with 5,3,2 but we
+will replace this 1 with 2 and we just want the next permutation so answer till now will be 42531 but the answer is 42135 so just after the replaced index which is 
+here 1 you have to reverse the rest elements/sort them in ascending order so if 531 are reversed we get 135 and we attach 135 to 42 which gives answer as 42135.
+
+if you think clearly the next permutation of 41532 is 42135 so we get see the pattern when we reached 1 from back we replaced it with the just greatest value on the
+right and rest we reversed..
+so finally traverse from right to left find the first element where arr[i]<arr[i+1] and store that index that means we put something on this index i, now we traverse
+the array again and find the just greater element than this arr[i] as we found that we replace the two indexes values.
+and the last step is to "reverse" /sort everything after this index i i think this sorting this is understood as you got a bigger element at index i so you need the just
+greater permutation so you have to make the values after that index i as small as possible ..
+
+one edge case you have to consider if the whole array is in the descending order and in that case you will not be able to find the index i where arr[i]<arr[i+1]
+so for that we just give the sorted answer.
+
+//code
+   void reverse(int i,int j,vector<int>&nums)
+    {
+        while(i<j)
+        {
+            swap(nums[i],nums[j]);
+            i++;
+            j--;
+        }
+    }
+    void nextPermutation(vector<int>& nums) {
+        
+        int index1=-1;
+        for(int i=nums.size()-2;i>=0;i--)
+        {
+            if(nums[i]<nums[i+1])
+            {
+                index1=i;
+                break;
+            }
+        }
+        if(index1==-1)
+        {
+        reverse(0,nums.size()-1,nums);
+            return ;
+        }
+        int index2;
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+            if(nums[i]>nums[index1])
+            {
+                index2=i;
+                break;
+            }
+        }
