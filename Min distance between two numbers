@@ -1,0 +1,32 @@
+
+//see first of all the differnce here which will be the absolute values between the indexes will be minimum when the indexes lie close to each other
+so you have to find those indexes of x and y which are closer to each other which inturn will provide you with the minimum differnce and rest it is not required to check
+every index where x is found and take diff with indexes of y as again the indexes which lie close to each other will contribute to the minimum differnce ..
+
+
+//code
+int minDist(int arr[], int n, int x, int y) {
+        // code here
+
+int i,ans=INT_MAX;
+int index1=-1,index2=-1;
+for(i=0;i<n;i++)
+{
+    if(arr[i]==x)
+    {
+        index1=i;
+    }
+    if(arr[i]==y)
+    {
+        index2=i;
+    }
+    if(index1!=-1&&index2!=-1)
+    {
+        int temp=abs(index1-index2);
+        ans=min(ans,temp);
+    }
+}
+if(ans==INT_MAX)
+return -1;
+return ans;
+    }
