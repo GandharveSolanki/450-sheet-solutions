@@ -1,0 +1,28 @@
+Instead of directly using linear search and searching each element, we need to use the given information and modify it to search elements where we have maximum probability of finding the required element.
+
+To do this, while traversing the array, if the current element is not the required element:
+
+ Calculate absolute difference between element at current index and required element. This will give an idea of how far the required element can be from the current element.
+Now, assuming that the difference between adjacent elements is exactly k, we can find the least number of jumps required to reach required element from current element by dividing the calculated difference by k.
+Incase the difference between current element and required element is smaller than k, its division will result in 0, it means that we need to increment the iterator by 1, thus we take maximum of 1 or least jumps calculated and increment iterator by that.
+ 
+
+Code with explanation -
+
+int search(int arr[], int n, int x, int k)
+{
+    // Complete the function	
+    int i=0;
+    while(i<n){
+        if(arr[i]==x){
+            return i;
+            break;
+        }
+        else{
+            int diff = abs(arr[i]-x); // difference b/w current and required element
+            int jumps = diff/k; //least number of jumps required from current element
+            i += max(1,jumps);
+        }
+    }
+    return -1;
+}  
